@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Emlak Takip Sistemi</title>
+    <link rel="icon" href="https://icons.iconarchive.com/icons/hopstarter/sleek-xp-basic/256/Home-icon.png"
+        type="image/x-icon" />
+
+    <style>
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: floralwhite;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="margin-top: 40px;">
+        <div class="col-sm-10 offset-sm-1 text-center">
+            <a href="/"><img src="../static/hh.jpeg" alt="RealEstate" width="300" height="200">
+            </a>
+            <h2>Emlak Takip Sistemi</h2>
+            <hr>
+            {% if values == "1" %}
+            <div>
+                <h4>Konut Kayıt Ekle</h4>
+                <br>
+                <form action="/addKonut" method="POST">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="baslik">Konut Kayıt Başlığı</label>
+                            <input type="text" class="form-control" id="baslik" name="konutBaslik"
+                                placeholder="Konutun Başlığını Giriniz..." required>
+                        </div>
+                        <div class="col-md-2 mb-3 mt-1 ml-3">
+                            <label>Konut Durumu</label>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="satilik" name="konutDurum" class="custom-control-input"
+                                    value="Satılık" checked>
+                                <label class="custom-control-label" for="satilik">Satılık</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="kiralik" name="konutDurum" class="custom-control-input"
+                                    value="Kiralık">
+                                <label class="custom-control-label" for="kiralik">Kiralık</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="adres">Konut Adresi</label>
+                            <textarea class="form-control" id="adres" rows="3" name="konutAdres"
+                                placeholder="Adresi Giriniz..." required></textarea>
+                        </div>
+                        <div class="form-check col-md-5 ml-1 ">
+                            <div class="label">
+                                <label>
+                                    Isınma Tipi
+                                </label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="elektrikli" name="isinmaTipi" class="custom-control-input"
+                                    value="Elektrikli Merkezi Isıtıcı">
+                                <label class="custom-control-label" for="elektrikli">Elektrikli Merkezi Isıtıcı</label>
+                            </div>
+                            <br>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="dogalgazli" name="isinmaTipi" class="custom-control-input"
+                                    value="Doğalgazlı Merkezi Isıtma">
+                                <label class="custom-control-label" for="dogalgazli">Doğalgazlı Merkezi Isıtma</label>
+                            </div>
+                            <br>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="siviYakitli" name="isinmaTipi" class="custom-control-input"
+                                    value="Sıvı Yakıtlı Merkezi Isıtma">
+                                <label class="custom-control-label" for="siviYakitli">Sıvı Yakıtlı Merkezi
+                                    Isıtma</label>
+                            </div>
+                            <br>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="odunluIsitma" name="isinmaTipi" class="custom-control-input"
+                                    value="Odunlu Isıtma Sistemi">
+                                <label class="custom-control-label" for="odunluIsitma">Odunlu Isıtma Sistemi</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row mt-3">
+                        <div class="col-md-3 mb-3">
+                            <label for="odaSayisi">Oda Sayısı</label>
+                            <input type="text" class="form-control" id="odaSayisi" name="konutOdaSayisi"
+                                placeholder="Oda Sayısını Giriniz..." required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="banyoSayisi">Banyo Sayısı</label>
+                            <input type="text" class="form-control" id="banyoSayisi" name="konutBanyoSayisi"
+                                placeholder="Banyo Sayısını Giriniz..." required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="metreKare">M<sup>2</sup></label>
+                            <input type="text" class="form-control" id="metreKare" name="konutMetreKare"
+                                placeholder="Metre Kare Boyutunu Giriniz..." required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="binaYas">Bina Yaşı</label>
+                            <input type="text" class="form-control" id="binaYas" name="konutBinaYasi"
+                                placeholder="Binanın Yaşını Giriniz..." required>
+                        </div>
+                    </div>
+                    <div class="form-row mt-3">
+                        <div class="col-md-3 mb-3">
+                            <label for="katSayisi">Kat Sayısı</label>
+                            <input type="text" class="form-control" id="katSayisi" name="konutKatSayisi"
+                                placeholder="Binanın Kat Sayısını Giriniz..." required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="bulunduguKat">Bulunduğu Kat</label>
+                            <input type="text" class="form-control" id="bulunduguKat" name="konutBulunduguKat"
+                                placeholder="Bulunduğu Katı Giriniz..." required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="aidat">Aidat</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">₺</span>
+                                </div>
+                                <input type="text" class="form-control" id="aidat" name="konutAidat" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="fiyat">Fiyat</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">₺</span>
+                                </div>
+                                <input type="text" class="form-control" id="fiyat" name="konutFiyati" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row mb-5">
+                        <button type="submit" class="btn btn-danger">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+            {% elif values == "2" %}
+            <div>
+                <h4>Arsa Kayıt Ekle</h4>
+                <br>
+                <form action="/addArsa" method="POST">
+                    <div class="form-row">
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="arsaBaslik">Arsa Kayıt Başlığı</label>
+                            <input type="text" class="form-control" id="arsaBaslik" name="arsaBaslik"
+                                placeholder="Arsa Başlığını Giriniz..." required>
+                        </div>
+                        <div class="col-md-2 mt-1 ml-3 mb-3">
+                            <label>Arsa Durumu</label>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="satilik" name="arsaDurum" class="custom-control-input"
+                                    value="Satılık" checked>
+                                <label class="custom-control-label" for="satilik">Satılık</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="kiralik" name="arsaDurum" class="custom-control-input"
+                                    value="Kiralık">
+                                <label class="custom-control-label" for="kiralik">Kiralık</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row ">
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="adres">Arsa Adresi</label>
+                            <textarea class="form-control" id="adres" rows="3" name="arsaAdres"
+                                placeholder="Adresi Giriniz..." required></textarea>
+                        </div>
+                        <div class="ml-3 mb-3">
+                            <label for="arsaImar">Arsanın İmar Durumu</label>
+                            <select class="form-control form-control-sm" id="arsaImar" name="arsaImarDurum">
+                                <option value="Ada" selected>Ada</option>
+                                <option value="Arazi">Arazi</option>
+                                <option value="Bağ &Bahçe">Bağ & Bahçe</option>
+                                <option value="Eğitim">Eğitim</option>
+                                <option value="Konut">Konut</option>
+                                <option value="Muhtelif">Muhtelif</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-row ">
+                        <div class="col-md-6 mb-3">
+                            <label for="metreKare">M<sup>2</sup></label>
+                            <input type="text" class="form-control" id="metreKare" name="arsaMetreKare"
+                                placeholder="Metre Kare Boyutunu Giriniz..." required>
+                        </div>
+                        <div class="ml-3 mb-3">
+                            <label for="arsaTapu">Arsanın Tapu Durumu</label>
+                            <select class="form-control form-control-sm" id="arsaTapu" name="arsaTapuDurum">
+                                <option value="Hisseli Tapu" selected>Hisseli Tapu</option>
+                                <option value="Müstakil Parsel">Müstakil Parsel</option>
+                                <option value="Tahsis">Tahsis</option>
+                                <option value="Zilliyet">Zilliyet</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <label for="kaksBoyutu">Kaks (Emsal)</label>
+                            <input type="text" class="form-control" id="kaksBoyutu" name="arsaKaks"
+                                placeholder="Kaks Değerini Giriniz..." required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="gabariBoyutu">Gabari</label>
+                            <input type="text" class="form-control" id="gabariBoyutu" name="arsaGabari"
+                                placeholder="Gabari Boyutunu Giriniz..." required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="fiyat">Fiyat</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">₺</span>
+                                </div>
+                                <input type="text" class="form-control" id="fiyat" name="arsaFiyat">
+                                <div class="input-group-append" required>
+                                    <span class="input-group-text">.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row mb-3">
+                        <button type="submit" class="btn btn-outline-danger">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+            {% elif values == "3" %}
+            <div>
+                <h4>İş Yeri Kayıt Ekle</h4>
+                <br>
+                <form action="/addIsYeri" method="POST">
+                    <div class="form-row">
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="isYeriBaslik">İş Yeri Kayıt Başlığı</label>
+                            <input type="text" class="form-control" id="isYeriBaslik" name="isYeriBaslik"
+                                placeholder="İş Yeri Başlığını Giriniz..." required>
+                        </div>
+                        <div class="col-md-2 mt-1 ml-3 mb-3">
+                            <label>İş Yeri Durumu</label>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="satilik" name="isYeriDurum" class="custom-control-input"
+                                    value="Satılık" checked>
+                                <label class="custom-control-label" for="satilik">Satılık</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="kiralik" name="isYeriDurum" class="custom-control-input"
+                                    value="Kiralık">
+                                <label class="custom-control-label" for="kiralik">Kiralık</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="adres">İş Yeri Adresi</label>
+                            <textarea class="form-control" id="adres" rows="3" name="isYeriAdres"
+                                placeholder="Adresi Giriniz..." required></textarea>
+                        </div>
+                        <div class="col-md-3 ml-3 mb-3">
+                            <label for="isYeriTuru">İş Yeri Türü</label>
+                            <select class="form-control form-control-sm" id="isYeriTuru" name="isYeriTuru">
+                                <option value="Dükkan" selected>Dükkan</option>
+                                <option value="Mağaza">Mağaza</option>
+                                <option value="Atölye">Atölye</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <label for="metreKare">M<sup>2</sup></label>
+                            <input type="text" class="form-control" id="metreKare" name="isYeriMetreKare"
+                                placeholder="Metre Kare Boyutunu Giriniz..." required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="bolumVeOda">İş Yeri Bölüm Ve Oda Sayısı</label>
+                            <input type="text" class="form-control" id="bolumVeOda" name="isYeriBolumVeOda"
+                                placeholder="Bölüm ve Oda Sayısını Giriniz..." required>
+                        </div>
+                        <div class="col-md-3 ml-3 mb-3">
+                            <label for="isYeriIsınma">İş Yeri Isıtma Türü</label>
+                            <select class="form-control form-control-sm" id="isYeriIsınma" name="isYeriIsınma">
+                                <option value="Elektrikli Merkezi Isıtıcı" selected>Elektrikli Merkezi Isıtıcı</option>
+                                <option value="Doğalgazlı Merkezi Isıtma">Doğalgazlı Merkezi Isıtma</option>
+                                <option value="Sıvı Yakıtlı Merkezi Isıtma">Sıvı Yakıtlı Merkezi Isıtma</option>
+                                <option value="Odunlu Isıtma Sistemi">Odunlu Isıtma Sistemi</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <label for="isYeriBinaYasi">Bina Yaşı</label>
+                            <input type="text" class="form-control" id="isYeriBinaYasi" name="isYeriBinaYasi"
+                                placeholder="Binanın Yaşını Giriniz..." required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="aidat">Aidat</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">₺</span>
+                                </div>
+                                <input type="text" class="form-control" id="aidat" name="isYeriAidat" required>
+                                <div class="input-group-append" >
+                                    <span class="input-group-text">.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="fiyat">Fiyat</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">₺</span>
+                                </div>
+                                <input type="text" class="form-control" id="fiyat" name="isYeriFiyati" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-row mb-5">
+                            <button type="submit" class="btn btn-danger">Kaydet</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
