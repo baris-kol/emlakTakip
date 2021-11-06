@@ -54,7 +54,7 @@ class isYeri(db.Model):
 @app.route("/")
 def index():
     return render_template("index.html")
-
+#deneme
 @app.route("/eklemeAlani",methods =['GET','POST'])
 def eklemeAlani():
     value = request.form.get("selectedData")
