@@ -127,7 +127,6 @@ def isYeriEkle():
     isYeriBinaYasi = request.form.get("isYeriBinaYasi")
     isYeriAidat = request.form.get("isYeriAidat")
     isYeriFiyati = request.form.get("isYeriFiyati")
-
     yeniIsYeriKayit = isYeri(isyeriBaslik = isYeriBaslik,isyeriDurum = isYeriDurum, isyeriAdres = isYeriAdres, isyeriTuru = isYeriTuru, isyeriMetreKare = isYeriMetreKare, isyeriBolumVeOdaSayisi = isYeriBolumVeOda, isyeriAidat = isYeriAidat, isyeriIsitma = isYeriIsınma, isyeriBinaYasi = isYeriBinaYasi, isyeriFiyat = isYeriFiyati)
 
     db.session.add(yeniIsYeriKayit)
@@ -147,7 +146,7 @@ def updateKonutData(id):
         konutData.konutDurum = "Kiralandı"
     elif(konutData.konutDurum == "Kiralandı"):
         konutData.konutDurum = "Kiralık"
-
+    print("Kiralama/Satılma Durumu")
     db.session.commit()
     konutlar = Konut.query.all()
     return render_template("index.html",konutList = konutlar, value = value)
