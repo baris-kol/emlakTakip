@@ -162,7 +162,7 @@ def updateArsaData(id):
         arsaData.arsaDurum = "Kiralandı"
     elif(arsaData.arsaDurum == "Kiralandı"):
         arsaData.arsaDurum = "Kiralık"
-
+    print("deneme")
     db.session.commit()
     arsalar = Arsa.query.all()
     return render_template("index.html",arsaList = arsalar,value = value)
