@@ -146,8 +146,6 @@ def updateKonutData(id):
         konutData.konutDurum = "Kiralandı"
     elif(konutData.konutDurum == "Kiralandı"):
         konutData.konutDurum = "Kiralık"
-    print("Kiralama/Satılma Durumu")
-    print("Deneme")
     db.session.commit()
     konutlar = Konut.query.all()
     return render_template("index.html",konutList = konutlar, value = value)
