@@ -1,9 +1,10 @@
-from flask import Flask,render_template,redirect,url_for,request
+from flask import Flask, render_template, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Barış/Desktop/Emlak Takip/emlak.db'
 db = SQLAlchemy(app)
+
 
 class Konut(db.Model):
     __tablename__ = 'konut'
@@ -11,16 +12,17 @@ class Konut(db.Model):
     konutId = db.Column(db.Integer, primary_key=True)
     konutBaslik = db.Column(db.String(100), unique=True, nullable=False)
     konutDurum = db.Column(db.String(50), nullable=False)
-    konutAdres = db.Column(db.String(200), nullable = False)
-    konutOdaSayisi = db.Column(db.String(50), nullable = False)
-    konutBanyoSayisi = db.Column(db.Integer, nullable = True)
-    konutIsınmaTipi = db.Column(db.String(50), nullable = True)
-    konutMetreKare = db.Column(db.Integer, nullable = False)
-    konutYasi = db.Column(db.Integer, nullable = True)
-    konutKatSayisi = db.Column(db.Integer, nullable = True)
-    konutBulunduguKat = db.Column(db.Integer, nullable = True)
-    konutAidat = db.Column(db.String(50), nullable = True)
-    konutFiyat = db.Column(db.String(50), nullable = False)
+    konutAdres = db.Column(db.String(200), nullable=False)
+    konutOdaSayisi = db.Column(db.String(50), nullable=False)
+    konutBanyoSayisi = db.Column(db.Integer, nullable=True)
+    konutIsınmaTipi = db.Column(db.String(50), nullable=True)
+    konutMetreKare = db.Column(db.Integer, nullable=False)
+    konutYasi = db.Column(db.Integer, nullable=True)
+    konutKatSayisi = db.Column(db.Integer, nullable=True)
+    konutBulunduguKat = db.Column(db.Integer, nullable=True)
+    konutAidat = db.Column(db.String(50), nullable=True)
+    konutFiyat = db.Column(db.String(50), nullable=False)
+
 
 class Arsa(db.Model):
     __tablename__ = 'arsa'
@@ -28,13 +30,14 @@ class Arsa(db.Model):
     arsaId = db.Column(db.Integer, primary_key=True)
     arsaBaslik = db.Column(db.String(100), unique=True, nullable=False)
     arsaDurum = db.Column(db.String(50), nullable=False)
-    arsaAdres = db.Column(db.String(200), nullable = False)
-    arsaImarDurum = db.Column(db.String(50), nullable = False)
-    arsaMetreKare = db.Column(db.Integer, nullable = False)
-    arsaTapuDurum = db.Column(db.String(50), nullable = True)
-    arsaKaks = db.Column(db.Integer, nullable = False)
-    arsaGabari = db.Column(db.Integer, nullable = False)
-    arsaFiyat = db.Column(db.String(50), nullable = False)
+    arsaAdres = db.Column(db.String(200), nullable=False)
+    arsaImarDurum = db.Column(db.String(50), nullable=False)
+    arsaMetreKare = db.Column(db.Integer, nullable=False)
+    arsaTapuDurum = db.Column(db.String(50), nullable=True)
+    arsaKaks = db.Column(db.Integer, nullable=False)
+    arsaGabari = db.Column(db.Integer, nullable=False)
+    arsaFiyat = db.Column(db.String(50), nullable=False)
+
 
 class isYeri(db.Model):
     __tablename__ = 'isyeri'
@@ -42,39 +45,44 @@ class isYeri(db.Model):
     isyeriId = db.Column(db.Integer, primary_key=True)
     isyeriBaslik = db.Column(db.String(100), unique=True, nullable=False)
     isyeriDurum = db.Column(db.String(50), nullable=False)
-    isyeriAdres = db.Column(db.String(200), nullable = False)
-    isyeriTuru = db.Column(db.String(50), nullable = True)
-    isyeriMetreKare = db.Column(db.Integer, nullable = False)
-    isyeriBolumVeOdaSayisi = db.Column(db.Integer, nullable = True)
-    isyeriAidat = db.Column(db.String(50), nullable = False)
-    isyeriIsitma = db.Column(db.String(50), nullable = True)
-    isyeriBinaYasi = db.Column(db.Integer,nullable = False)
-    isyeriFiyat = db.Column(db.String(50), nullable = False)
+    isyeriAdres = db.Column(db.String(200), nullable=False)
+    isyeriTuru = db.Column(db.String(50), nullable=True)
+    isyeriMetreKare = db.Column(db.Integer, nullable=False)
+    isyeriBolumVeOdaSayisi = db.Column(db.Integer, nullable=True)
+    isyeriAidat = db.Column(db.String(50), nullable=False)
+    isyeriIsitma = db.Column(db.String(50), nullable=True)
+    isyeriBinaYasi = db.Column(db.Integer, nullable=False)
+    isyeriFiyat = db.Column(db.String(50), nullable=False)
+
 
 @app.route("/")
 def index():
     return render_template("index.html")
-#deneme
-@app.route("/eklemeAlani",methods =['GET','POST'])
+# deneme
+
+
+@app.route("/eklemeAlani", methods=['GET', 'POST'])
 def eklemeAlani():
     value = request.form.get("selectedData")
-    return render_template("eklemeAlani.html", values = str(value))
+    return render_template("eklemeAlani.html", values=str(value))
 
-@app.route("/listelenmis",methods = ['GET','POST'])
+
+@app.route("/listelenmis", methods=['GET', 'POST'])
 def listelenmis():
-    value = request.form.get("selectedList")  
-    
+    value = request.form.get("selectedList")
+
     if(value == "Konut"):
         konutlar = Konut.query.all()
-        return render_template("index.html",konutList = konutlar, value = value)
+        return render_template("index.html", konutList=konutlar, value=value)
     elif(value == "Arsa"):
         arsalar = Arsa.query.all()
-        return render_template("index.html",arsaList = arsalar,value = value)
+        return render_template("index.html", arsaList=arsalar, value=value)
     elif(value == "isYeri"):
         isYerleri = isYeri.query.all()
-        return render_template("index.html", isYeriList = isYerleri,value = value)
-    
-@app.route("/addKonut", methods = ['POST'])
+        return render_template("index.html", isYeriList=isYerleri, value=value)
+
+
+@app.route("/addKonut", methods=['POST'])
 def konutEkle():
     konutBaslik = request.form.get("konutBaslik")
     konutDurum = request.form.get("konutDurum")
@@ -89,14 +97,16 @@ def konutEkle():
     konutAidat = request.form.get("konutAidat")
     konutFiyat = request.form.get("konutFiyati")
 
-    yeniKonutKayit = Konut(konutBaslik = konutBaslik,konutDurum = konutDurum,konutAdres = konutAdres,konutOdaSayisi=konutOdaSayisi,konutBanyoSayisi = konutBanyoSayisi,konutIsınmaTipi = isinmaTipi,konutMetreKare = konutMetreKare,konutYasi = konutBinaYasi,konutKatSayisi = konutKatSayisi,konutBulunduguKat = konutBulunduguKat,konutAidat = konutAidat,konutFiyat = konutFiyat)
+    yeniKonutKayit = Konut(konutBaslik=konutBaslik, konutDurum=konutDurum, konutAdres=konutAdres, konutOdaSayisi=konutOdaSayisi, konutBanyoSayisi=konutBanyoSayisi, konutIsınmaTipi=isinmaTipi,
+                           konutMetreKare=konutMetreKare, konutYasi=konutBinaYasi, konutKatSayisi=konutKatSayisi, konutBulunduguKat=konutBulunduguKat, konutAidat=konutAidat, konutFiyat=konutFiyat)
 
     db.session.add(yeniKonutKayit)
     db.session.commit()
 
     return redirect(url_for("index"))
 
-@app.route("/addArsa", methods =['POST'])
+
+@app.route("/addArsa", methods=['POST'])
 def arsaEkle():
     arsaBaslik = request.form.get("arsaBaslik")
     arsaDurum = request.form.get("arsaDurum")
@@ -108,14 +118,16 @@ def arsaEkle():
     arsaGabari = request.form.get("arsaGabari")
     arsaFiyat = request.form.get("arsaFiyat")
 
-    yeniArsaKayit = Arsa(arsaBaslik = arsaBaslik, arsaDurum = arsaDurum, arsaAdres = arsaAdres, arsaImarDurum = arsaImarDurum, arsaMetreKare = arsaMetreKare, arsaTapuDurum = arsaTapuDurum, arsaKaks = arsaKaks, arsaGabari = arsaGabari, arsaFiyat = arsaFiyat)
+    yeniArsaKayit = Arsa(arsaBaslik=arsaBaslik, arsaDurum=arsaDurum, arsaAdres=arsaAdres, arsaImarDurum=arsaImarDurum,
+                         arsaMetreKare=arsaMetreKare, arsaTapuDurum=arsaTapuDurum, arsaKaks=arsaKaks, arsaGabari=arsaGabari, arsaFiyat=arsaFiyat)
 
     db.session.add(yeniArsaKayit)
     db.session.commit()
 
     return redirect(url_for("index"))
 
-@app.route("/addIsYeri", methods = ['POST'])
+
+@app.route("/addIsYeri", methods=['POST'])
 def isYeriEkle():
     isYeriBaslik = request.form.get("isYeriBaslik")
     isYeriDurum = request.form.get("isYeriDurum")
@@ -127,17 +139,19 @@ def isYeriEkle():
     isYeriBinaYasi = request.form.get("isYeriBinaYasi")
     isYeriAidat = request.form.get("isYeriAidat")
     isYeriFiyati = request.form.get("isYeriFiyati")
-    yeniIsYeriKayit = isYeri(isyeriBaslik = isYeriBaslik,isyeriDurum = isYeriDurum, isyeriAdres = isYeriAdres, isyeriTuru = isYeriTuru, isyeriMetreKare = isYeriMetreKare, isyeriBolumVeOdaSayisi = isYeriBolumVeOda, isyeriAidat = isYeriAidat, isyeriIsitma = isYeriIsınma, isyeriBinaYasi = isYeriBinaYasi, isyeriFiyat = isYeriFiyati)
+    yeniIsYeriKayit = isYeri(isyeriBaslik=isYeriBaslik, isyeriDurum=isYeriDurum, isyeriAdres=isYeriAdres, isyeriTuru=isYeriTuru, isyeriMetreKare=isYeriMetreKare,
+                             isyeriBolumVeOdaSayisi=isYeriBolumVeOda, isyeriAidat=isYeriAidat, isyeriIsitma=isYeriIsınma, isyeriBinaYasi=isYeriBinaYasi, isyeriFiyat=isYeriFiyati)
 
     db.session.add(yeniIsYeriKayit)
     db.session.commit()
 
     return redirect(url_for("index"))
 
+
 @app.route("/updateKonut/<string:id>")
 def updateKonutData(id):
     value = "Konut"
-    konutData = Konut.query.filter_by(konutId = id).first()
+    konutData = Konut.query.filter_by(konutId=id).first()
     if(konutData.konutDurum == "Satılık"):
         konutData.konutDurum = "Satıldı"
     elif(konutData.konutDurum == "Satıldı"):
@@ -148,12 +162,13 @@ def updateKonutData(id):
         konutData.konutDurum = "Kiralık"
     db.session.commit()
     konutlar = Konut.query.all()
-    return render_template("index.html",konutList = konutlar, value = value)
+    return render_template("index.html", konutList=konutlar, value=value)
+
 
 @app.route("/updateArsa/<string:id>")
 def updateArsaData(id):
     value = "Arsa"
-    arsaData = Arsa.query.filter_by(arsaId = id).first()
+    arsaData = Arsa.query.filter_by(arsaId=id).first()
     if(arsaData.arsaDurum == "Satılık"):
         arsaData.arsaDurum = "Satıldı"
     elif(arsaData.arsaDurum == "Satıldı"):
@@ -164,12 +179,13 @@ def updateArsaData(id):
         arsaData.arsaDurum = "Kiralık"
     db.session.commit()
     arsalar = Arsa.query.all()
-    return render_template("index.html",arsaList = arsalar,value = value)
+    return render_template("index.html", arsaList=arsalar, value=value)
+
 
 @app.route("/updateisYeri/<string:id>")
 def updateisYeriData(id):
     value = "isYeri"
-    isYeriData = isYeri.query.filter_by(isyeriId = id).first()
+    isYeriData = isYeri.query.filter_by(isyeriId=id).first()
     if(isYeriData.isyeriDurum == "Satılık"):
         isYeriData.isyeriDurum = "Satıldı"
     elif(isYeriData.isyeriDurum == "Satıldı"):
@@ -181,35 +197,40 @@ def updateisYeriData(id):
 
     db.session.commit()
     isYerleri = isYeri.query.all()
-    return render_template("index.html", isYeriList = isYerleri,value = value)
+    return render_template("index.html", isYeriList=isYerleri, value=value)
+
 
 @app.route("/deleteKonut/<string:id>")
 def deleteKonutData(id):
     value = "Konut"
-    konutData = Konut.query.filter_by(konutId = id).first()
+    konutData = Konut.query.filter_by(konutId=id).first()
     db.session.delete(konutData)
     db.session.commit()
     konutlar = Konut.query.all()
-    return render_template("index.html",konutList = konutlar, value = value)
+    return render_template("index.html", konutList=konutlar, value=value)
+
 
 @app.route("/deleteArsa/<string:id>")
 def deleteArsaData(id):
     value = "Arsa"
-    arsaData = Arsa.query.filter_by(arsaId = id).first()
+    arsaData = Arsa.query.filter_by(arsaId=id).first()
     db.session.delete(arsaData)
     db.session.commit()
     arsalar = Arsa.query.all()
-    return render_template("index.html",arsaList = arsalar,value = value)
+    return render_template("index.html", arsaList=arsalar, value=value)
+
 
 @app.route("/deleteisYeri/<string:id>")
 def deleteisYeriData(id):
     value = "isYeri"
-    isYeriData = isYeri.query.filter_by(isyeriId = id).first()
+    isYeriData = isYeri.query.filter_by(isyeriId=id).first()
     db.session.delete(isYeriData)
     db.session.commit()
     isYerleri = isYeri.query.all()
-    return render_template("index.html", isYeriList = isYerleri,value = value)
+    print("deneme")
+    return render_template("index.html", isYeriList=isYerleri, value=value)
+
 
 if __name__ == "__main__":
     db.create_all()
-    app.run(debug = True)
+    app.run(debug=True)
